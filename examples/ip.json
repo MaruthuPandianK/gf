@@ -1,4 +1,31 @@
 {
-    "flags": "-HnroE",
-    "pattern": "(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])"
+  "name": "ip-address-leak",
+  "flags": "-Hni",
+  "pattern": "(?i)\\b((?:(?:[0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}(?:[0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(?:(?:/\\d{1,2})|\\b)|https?://(?:[0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}(?:[0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])|(?:[0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}\\b)",
+  "blacklist": [
+    "0\\.0\\.0\\.0",
+    "127\\.0\\.0\\.1",
+    "8\\.8\\.8\\.8",
+    "1\\.1\\.1\\.1",
+    "192\\.168\\.0\\.1",
+    "example\\.com",
+    "localhost",
+    "::1"
+  ],
+  "description": "Detects IPv4 addresses (including private IPs and CIDR notation), IPv6 addresses, and IPs in URLs in HTTP responses, JavaScript, or logs. Prioritizes private/internal IPs and filters common non-sensitive IPs like public DNS or localhost.",
+  "severity": "medium",
+  "authors": ["Grok3"],
+  "recommendations": [
+    "Avoid exposing internal or private IP addresses in public HTTP responses or client-side code.",
+    "Implement network segmentation to restrict access to internal IPs.",
+    "Use reverse proxies or WAFs to mask server IPs in responses.",
+    "Audit API responses and JavaScript files for hardcoded IP addresses.",
+    "Monitor for misconfigured services exposing IPs (e.g., debug endpoints)."
+  ],
+  "reference": [
+    "https://owasp.org/Top10/A05_2021-Security_Misconfiguration/",
+    "https://cheatsheetseries.owasp.org/cheatsheets/Information_Disclosure_Cheat_Sheet.html",
+    "https://book.hacktricks.xyz/pentesting-web/information-disclosure"
+  ],
+  "grep": true
 }
