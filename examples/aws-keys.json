@@ -1,4 +1,15 @@
 {
-    "flags": "-HanrE",
-    "pattern": "([^A-Z0-9]|^)(AKIA|A3T|AGPA|AIDA|AROA|AIPA|ANPA|ANVA|ASIA)[A-Z0-9]{12,}"
+  "flags": "-i",
+  "pattern": "\\b(AKIA|ABIA|ACCA|A3T|AGPA|AIDA|AROA|AIPA|ANPA|ANVA|ASIA)[0-9A-Z]{16}\\b",
+  "blacklist": [
+    "(AKIA|ABIA|ACCA|A3T|AGPA|AIDA|AROA|AIPA|ANPA|ANVA|ASIA)0000000000000000",
+    "EXAMPLE[A-Z0-9]{16}"
+  ],
+  "description": "Detects AWS access keys while ignoring common fake/placeholder keys.",
+  "severity": "high",
+  "authors": ["maruthu"],
+  "reference": [
+    "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html",
+    "https://aws.amazon.com/security/security-bulletins/AWS-2023-006/"
+  ]
 }
