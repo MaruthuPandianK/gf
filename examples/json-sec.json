@@ -1,4 +1,30 @@
 {
-    "flags": "-harioE",
-    "pattern": "(\\\\?\"|&quot;|%22)[a-z0-9_-]*(api[_-]?key|S3|aws_|secret|passw|auth)[a-z0-9_-]*(\\\\?\"|&quot;|%22): ?(\\\\?\"|&quot;|%22)[^\"&]+(\\\\?\"|&quot;|%22)"
+  "name": "sensitive-credential-leak",
+  "flags": "-Hni",
+  "pattern": "(?i)\\b((?:api[_-]?key|aws[_-](?:access[_-]?key|secret[_-]?access[_-]?key)|s3[_-]?key|secret[_-]?key|passw(?:ord|d)?|auth[_-]?token|access[_-]?token|client[_-]?secret|token|key|credential)[a-z0-9_-]{0,20})\\s*[:=]\\s*(?:\"([^\"&]{20,})\"|([A-Za-z0-9+/\\-_\\.]{20,}(?:==)?))\\b",
+  "blacklist": [
+    "example\\.com",
+    "sample\\.com",
+    "test\\.com",
+    "api[_-]?key\":\\s*\"example\"",
+    "password\":\\s*\"placeholder\"",
+    "secret\":\\s*\"test\"",
+    "docs\\.api\\.com"
+  ],
+  "description": "Detects sensitive key-value pairs (API keys, AWS credentials, passwords, tokens) in JSON, query parameters, or raw text in HTTP responses, JavaScript, or logs. Covers quoted and unquoted values, with a focus on high-entropy secrets. Filters common false positives like example keys.",
+  "severity": "critical",
+  "authors": ["Grok3"],
+  "recommendations": [
+    "Avoid hardcoding sensitive credentials in client-side code (e.g., JavaScript) or HTTP responses.",
+    "Use environment variables or secret management (e.g., AWS Secrets Manager, HashiCorp Vault).",
+    "Implement access controls to restrict exposure of sensitive endpoints.",
+    "Rotate compromised credentials immediately and audit for misuse.",
+    "Monitor logs and responses for accidental credential leaks using automated tools."
+  ],
+  "reference": [
+    "https://owasp.org/Top10/A07_2021-Identification_and_Authentication_Failures/",
+    "https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html",
+    "https://book.hacktricks.xyz/pentesting-web/credential-stuffing"
+  ],
+  "grep": true
 }
