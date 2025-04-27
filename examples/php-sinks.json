@@ -1,4 +1,34 @@
 {
-    "flags": "-HnriE",
-    "pattern": "[^a-z0-9_](system|exec|popen|pcntl_exec|eval|create_function|unserialize|file_exists|md5_file|filemtime|filesize|assert) ?\\("
+  "name": "php-sink-vulnerability",
+  "flags": "-Hni",
+  "pattern": "(?i)\\b(?:system|exec|popen|pcntl_exec|eval|create_function|unserialize|assert|passthru|shell_exec|proc_open|preg_replace\\s*\\([^,]+,[^,]+/e|include|require|include_once|require_once|file_get_contents|file_put_contents|file_exists|md5_file|filemtime|filesize)\\s*\\((?:[^()]+|\\([^()]+\\))*\\)",
+  "blacklist": [
+    "example\\.com",
+    "sample\\.php",
+    "test\\.php",
+    "docs\\.php\\.net",
+    "example\\.php",
+    "tutorial\\.php",
+    "localhost",
+    "eval\\s*\\(\\s*['\"][^'\"]+['\"]\\s*\\)"
+  ],
+  "description": "Detects high-risk PHP sink functions (e.g., system, eval, unserialize) and file manipulation functions that could lead to code execution, insecure deserialization, or file inclusion vulnerabilities in PHP code, HTTP responses, or logs. Filters false positives like documentation, example code, or safe eval usage.",
+  "severity": "critical",
+  "authors": ["Grok3"],
+  "recommendations": [
+    "Avoid using dangerous functions (e.g., eval, unserialize) with user-controlled input.",
+    "Validate and sanitize all inputs to file inclusion or execution functions (e.g., include, system).",
+    "Use safer alternatives (e.g., JSON for serialization, prepared statements for file operations).",
+    "Disable dangerous PHP functions in php.ini (e.g., disable_functions=eval,system).",
+    "Audit PHP code for insecure usage of sink functions and implement proper access controls."
+  ],
+  "reference": [
+    "https://owasp.org/Top10/A03_2021-Injection/",
+    "https://owasp.org/Top10/A08_2021-Software_and_Data_Integrity_Failures/",
+    "https://cheatsheetseries.owasp.org/cheatsheets/Injection_Prevention_Cheat_Sheet.html",
+    "https://www.php.net/manual/en/function.eval.php",
+    "https://www.php.net/manual/en/function.unserialize.php",
+    "https://book.hacktricks.xyz/pentesting-web/code-execution"
+  ],
+  "grep": true
 }
