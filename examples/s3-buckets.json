@@ -1,10 +1,11 @@
 {
-    "flags": "-hrioaE",
-    "patterns": [
-        "[a-z0-9.-]+\\.s3\\.amazonaws\\.com",
-        "[a-z0-9.-]+\\.s3-[a-z0-9-]\\.amazonaws\\.com",
-        "[a-z0-9.-]+\\.s3-website[.-](eu|ap|us|ca|sa|cn)",
-        "//s3\\.amazonaws\\.com/[a-z0-9._-]+",
-        "//s3-[a-z0-9-]+\\.amazonaws\\.com/[a-z0-9._-]+"
-    ]
+  "flags": "-hrioaE",
+  "pattern": "(?i)([a-z0-9.-]+\\.s3\\.amazonaws\\.com|[a-z0-9.-]+\\.s3-[a-z0-9-]+\\.amazonaws\\.com|[a-z0-9.-]+\\.s3-website[.-](eu|ap|us|ca|sa|cn)|//s3\\.amazonaws\\.com/[a-z0-9._-]+|//s3-[a-z0-9-]+\\.amazonaws\\.com/[a-z0-9._-]+)",
+  "description": "Detects Amazon S3 bucket URLs that could indicate potential misconfigurations or exposed storage.",
+  "severity": "high",
+  "authors": ["maruthu"],
+  "reference": [
+    "https://docs.aws.amazon.com/AmazonS3/latest/userguide/WebsiteHosting.html",
+    "https://hackerone.com/reports/312205"
+  ]
 }
