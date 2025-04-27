@@ -1,7 +1,11 @@
 {
-    "flags": "-HnrE",
-    "patterns": [
-        "\\$_(POST|GET|COOKIE|REQUEST|SERVER|FILES)",
-        "php://(input|stdin)"
-    ]
+  "flags": "-HnrE",
+  "pattern": "(?i)\\$_(POST|GET|COOKIE|REQUEST|SERVER|FILES)|php://(input|stdin)",
+  "description": "Detects potential PHP input sources that could lead to vulnerabilities if improperly handled, including superglobals and stream wrappers.",
+  "severity": "high",
+  "authors": ["maruthu"],
+  "reference": [
+    "https://www.php.net/manual/en/reserved.variables.php",
+    "https://owasp.org/www-community/vulnerabilities/PHP_Injection"
+  ]
 }
