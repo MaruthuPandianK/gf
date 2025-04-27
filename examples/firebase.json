@@ -1,4 +1,29 @@
 {
-    "flags": "-Hnri",
-    "pattern": "firebaseio.com"
+  "name": "firebase-leak",
+  "flags": "-Hni",
+  "pattern": "(?i)\\b([a-zA-Z0-9-_]{1,100}\\.firebaseio\\.com|firebaseio\\.com/[a-zA-Z0-9-_]{1,100}|\"databaseURL\"\\s*:\\s*\"https?://[a-zA-Z0-9-_]+\\.firebaseio\\.com\"|\\.firebaseio\\.com\\b)",
+  "blacklist": [
+    "example\\.firebaseio\\.com",
+    "sample\\.firebaseio\\.com",
+    "test\\.firebaseio\\.com",
+    "demo\\.firebaseio\\.com",
+    "firebaseio\\.com/docs",
+    "firebaseio\\.com/pricing"
+  ],
+  "description": "Detects Firebase database URLs, subdomains, and configuration leaks in HTTP responses, JavaScript, or logs. Filters common false positives like documentation or sample domains.",
+  "severity": "high",
+  "authors": ["Grok3"],
+  "recommendations": [
+    "Verify Firebase database rules to ensure authentication and authorization are enforced.",
+    "Restrict public access to Firebase instances via security rules or network controls.",
+    "Avoid exposing Firebase database URLs in client-side code (e.g., JavaScript).",
+    "Monitor for misconfigured Firebase instances using tools like firebase-scanner.",
+    "Audit JavaScript files for hardcoded Firebase configuration objects."
+  ],
+  "reference": [
+    "https://firebase.google.com/docs/database/security",
+    "https://owasp.org/Top10/A01_2021-Broken_Access_Control/",
+    "https://book.hacktricks.xyz/pentesting-web/firebase"
+  ],
+  "grep": true
 }
