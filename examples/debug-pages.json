@@ -1,5 +1,31 @@
 {
-    "flags": "-HnraiE",
-    "pattern": "(Application-Trace|Routing Error|DEBUG\"? ?[=:] ?True|Caused by:|stack trace:|Microsoft .NET Framework|Traceback|[0-9]:in `|#!/us|WebApplicationException|java\\.lang\\.|phpinfo|swaggerUi|on line [0-9]|SQLSTATE)"
-    
+  "name": "verbose-error-leaks",
+  "flags": "-Hni",
+  "pattern": "(?i)\\b(Application-Trace|Routing[\\s-]Error|DEBUG\\s*[:=]\\s*True\\b|Caused\\s+by:|stack\\s+trace:|Microsoft\\s*\\.NET\\s*Framework\\b|Traceback\\b|\\d+:in\\s+`|#!/usr/bin/env\\s+(python|ruby|bash)|WebApplicationException\\b|java\\.lang\\.[A-Za-z]+Exception|javax\\.servlet\\.[A-Za-z]+Exception|phpinfo\\(\\)|swagger-ui|on\\s+line\\s+\\d+|SQLSTATE\\[\\w+\\]|Fatal\\s+Error:|Warning:\\s+[^\\n]+?on\\s+line|Notice:\\s+[^\\n]+?on\\s+line|Uncached\\s+Exception|at\\s+(org\\.|sun\\.|java\\.|com\\.)[A-Za-z0-9\\.]+\\(|System\\.StackTrace\\b|TypeError:\\s|ReferenceError:\\s|ValueError:\\s|SyntaxError:\\s|Segmentation\\s+Fault|OutOfMemoryError|500\\s+Internal\\s+Server\\s+Error\\b|403\\s+Forbidden\\b|404\\s+Not\\s+Found\\b|405\\s+Method\\s+Not\\s+Allowed\\b|GraphQL\\s+Error:|Laravel\\s+Exception|Flask\\s+Debug|Express\\s+Error|AWS\\s+Lambda\\s+Error|GCP\\s+Cloud\\s+Function\\s+Error|Azure\\s+Function\\s+Error)\\b",
+  "blacklist": [
+    "Example\\.Traceback",
+    "Mock\\.WebApplicationException",
+    "test_debug_flag=False",
+    "sample_error_log",
+    "documentation\\.phpinfo",
+    "swagger-ui-demo",
+    "test\\.stacktrace"
+  ],
+  "whitelist": [],
+  "description": "Detects verbose errors, stack traces, debug info, and server/framework-specific leaks (PHP, Java, .NET, Python, Ruby, Node.js, Laravel, Flask, GraphQL, Swagger, Cloud) in HTTP responses or logs. Filters common false positives.",
+  "severity": "critical",
+  "authors": ["maruthu", "Grok3"],
+  "recommendations": [
+    "Disable debug mode in production (e.g., Django DEBUG=False, PHP display_errors=Off, Flask DEBUG=False).",
+    "Implement custom error handlers to suppress stack traces and verbose errors.",
+    "Restrict access to API documentation (e.g., Swagger, GraphQL endpoints).",
+    "Monitor cloud function logs (AWS Lambda, GCP, Azure) for accidental leaks.",
+    "Use WAF or logging filters to detect and block verbose error responses."
+  ],
+  "reference": [
+    "https://owasp.org/Top10/A05_2021-Security_Misconfiguration/",
+    "https://cheatsheetseries.owasp.org/cheatsheets/Improper_Error_Handling_Cheat_Sheet.html",
+    "https://owasp.org/www-project-secure-coding-practices-quick-reference-guide/"
+  ],
+  "grep": true
 }
