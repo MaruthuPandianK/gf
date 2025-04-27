@@ -1,6 +1,17 @@
 {
-    "flags": "-HnriE",
-    "patterns": [
-        "Access-Control-Allow"
-    ]
+  "flags": "-HnriE",
+  "patterns": [
+    "Access-Control-Allow",
+    "Access-Control-Allow-Origin",
+    "Access-Control-Allow-Credentials",
+    "Access-Control-Allow-Methods",
+    "Access-Control-Allow-Headers"
+  ],
+  "description": "Detects CORS related HTTP headers that may indicate potential misconfigurations or security risks.",
+  "severity": "medium",
+  "authors": ["maruthu"],
+  "reference": [
+    "https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS",
+    "https://portswigger.net/web-security/cors"
+  ]
 }
