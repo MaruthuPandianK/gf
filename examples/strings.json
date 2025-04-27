@@ -1,20 +1,17 @@
 {
-  "flags": "-hroiaE",
-  "patterns": [
-    "\"[^\"]+\"",
-    "'[^']+'",
-    "\"([^\"]{5,})\"",
-    "'([^']{5,})'",
-    "\"([a-zA-Z0-9]{3,})\"",
-    "'([a-zA-Z0-9]{3,})'",
-    "\"[^\"]*[^\\s]+[^\"]*\"",
-    "'[^\']*[^\\s]+[^\']*'"
+  "flags": "-iE",
+  "pattern": "(?:(?<!\\\\)\"(?:[^\"\\n]{5,}|[a-zA-Z0-9]{3,}|[A-Za-z0-9+/=]{40,}|[A-Za-z0-9_-]{32,}|[^\"=]+=[^\"&]+|(?:0x)?[a-fA-F0-9]{8,})\"(?!\\\\)|(?<!\\\\)'(?:[^'\\n]{5,}|[a-zA-Z0-9]{3,}|[A-Za-z0-9+/=]{40,}|[A-Za-z0-9_-]{32,}|[^'=]+=[^'&]+|(?:0x)?[a-fA-F0-9]{8,})'(?!\\\\)|\"[^\"]+\"\\s*:\\s*\"[^\"\\s]{4,}\")",
+  "blacklist": [
+    "\"(?:https?://|ftp://)[^\"\\s]+\"",
+    "'(?:https?://|ftp://)[^'\\s]+'",
+    "\"\\d+\\.\\d+\\.\\d+\\.\\d+\"",
+    "\"\\d{4}-\\d{2}-\\d{2}(?:T\\d{2}:\\d{2}:\\d{2})?\"",
+    "\"(?:true|false|null)\"",
+    "\"[A-Z][A-Z0-9_]{2,}\"",
+    "'[A-Z][A-Z0-9_]{2,}'"
   ],
-  "description": "Detects and extracts strings within quotes that could be potential sensitive data or keys, focusing on both short and long strings. Enhanced to match more specific patterns like alphanumeric strings and strings of length 5 or more.",
+  "description": "[GF] Detects sensitive strings in quotes (secrets, tokens, configs) while excluding URLs, IPs, dates, and constants",
   "severity": "high",
   "authors": ["maruthu"],
-  "reference": [
-    "https://www.owasp.org/index.php/Injection_Flaws",
-    "https://www.acs.com.hk/download-manual/TechNote_Security.pdf"
-  ]
+  "usage": "cat files.txt | gf string-secrets"
 }
