@@ -1,8 +1,31 @@
 {
-    "flags": "-HnrE",
-    "patterns": [
-        "a:[0-9]+:{",
-        "O:[0-9]+:\"",
-        "s:[0-9]+:\""
-    ]
+  "name": "php-serialized-leak",
+  "flags": "-Hni",
+  "pattern": "(?i)\\b(?:a:[0-9]+:\\{[^{}]*\\}|O:[0-9]+:\"[A-Za-z0-9_]+\":[0-9]+:\\{[^{}]*\\}|s:[0-9]+:\"[^\"]*\";|i:[0-9]+;|b:[0-1];|N;|(?:[aOsibN]:[0-9]+:[\"{;][^{};\"]*[};])(?:[aOsibN]:[0-9]+:[\"{;][^{};\"]*[};])?)\\b",
+  "blacklist": [
+    "example\\.com",
+    "sample\\.php",
+    "test\\.php",
+    "docs\\.php\\.net",
+    "example\\.php",
+    "tutorial\\.php",
+    "localhost"
+  ],
+  "description": "Detects PHP serialized data (arrays, objects, strings, integers, booleans, nulls) in HTTP responses, PHP files, query parameters, or logs. Focuses on potential insecure deserialization vulnerabilities or exposed sensitive data. Filters false positives like documentation or example code.",
+  "severity": "critical",
+  "authors": ["Grok3"],
+  "recommendations": [
+    "Avoid using unserialize() on user-controlled input to prevent insecure deserialization vulnerabilities.",
+    "Sanitize and validate serialized data before processing in PHP applications.",
+    "Prevent exposure of serialized data in HTTP responses, query parameters, or logs.",
+    "Use secure serialization formats (e.g., JSON) instead of PHP's native serialization.",
+    "Audit server configurations to prevent leakage of serialized data or PHP source code."
+  ],
+  "reference": [
+    "https://owasp.org/Top10/A08_2021-Software_and_Data_Integrity_Failures/",
+    "https://cheatsheetseries.owasp.org/cheatsheets/Deserialization_Cheat_Sheet.html",
+    "https://www.php.net/manual/en/function.serialize.php",
+    "https://book.hacktricks.xyz/pentesting-web/deserialization"
+  ],
+  "grep": true
 }
