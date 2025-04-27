@@ -1,29 +1,30 @@
 {
-    "flags": "-HnriE",
-    "patterns": [
-        "django",
-        "laravel",
-        "symfony",
-        "graphite",
-        "grafana",
-        "X-Drupal-Cache",
-        "struts",
-        "code ?igniter",
-        "cake ?php",
-        "grails",
-        "elastic ?search",
-        "kibana",
-        "log ?stash",
-        "tomcat",
-        "jenkins",
-        "hudson",
-        "com.atlassian.jira",
-        "Apache Subversion",
-        "Chef Server",
-        "RabbitMQ Management",
-        "Mongo",
-        "Travis CI - Enterprise",
-        "BMC Remedy",
-        "artifactory"
-    ]
+  "name": "framework-technology-leak",
+  "flags": "-Hni",
+  "pattern": "(?i)\\b(django\\b(?![\\w-])|laravel\\b(?![\\w-])|symfony\\b(?![\\w-])|graphite\\b(?![\\w-])|grafana\\b(?![\\w-])|X-Drupal-Cache|struts\\b(?![\\w-])|codeigniter\\b(?![\\w-])|cakephp\\b(?![\\w-])|grails\\b(?![\\w-])|elasticsearch\\b(?![\\w-])|kibana\\b(?![\\w-])|logstash\\b(?![\\w-])|tomcat\\b(?![\\w-])|jenkins\\b(?![\\w-])|hudson\\b(?![\\w-])|com\\.atlassian\\.jira|apache\\s+subversion\\b|chef\\s+server\\b|rabbitmq\\s+management\\b|mongodb\\b(?![\\w-])|travis\\s+ci\\s+-\\s+enterprise\\b|bmc\\s+remedy\\b|artifactory\\b(?![\\w-])|flask\\b(?![\\w-])|fastapi\\b(?![\\w-])|next\\.js\\b|graphql\\b(?![\\w-])|swagger\\-ui|kubernetes\\b(?![\\w-])|aws\\s+lambda\\b|spring\\s+boot\\b)\\b",
+  "blacklist": [
+    "example\\.django",
+    "sample\\.laravel",
+    "test\\.jenkins",
+    "demo\\.grafana",
+    "docs\\.elastic\\.co",
+    "swagger\\.io",
+    "example\\.com.*(django|laravel|symfony)"
+  ],
+  "description": "Detects references to web frameworks, CMS platforms, CI/CD tools, and server technologies in HTTP responses, headers, or logs. Includes modern frameworks (Flask, FastAPI, Next.js) and cloud tools (Kubernetes, AWS Lambda). Filters common false positives.",
+  "severity": "medium",
+  "authors": ["Grok3"],
+  "recommendations": [
+    "Verify that administrative interfaces (e.g., Jenkins, Grafana) are not publicly accessible.",
+    "Implement access controls and authentication for exposed services (e.g., Elasticsearch, RabbitMQ).",
+    "Avoid exposing framework or server version details in HTTP headers or responses.",
+    "Use custom error pages to suppress technology fingerprints.",
+    "Audit JavaScript files and API responses for hardcoded configuration leaks."
+  ],
+  "reference": [
+    "https://owasp.org/Top10/A05_2021-Security_Misconfiguration/",
+    "https://cheatsheetseries.owasp.org/cheatsheets/Information_Disclosure_Cheat_Sheet.html",
+    "https://book.hacktricks.xyz/pentesting-web/fingerprinting"
+  ],
+  "grep": true
 }
