@@ -1,4 +1,29 @@
 {
-  "flags": "-HnriE",
-  "pattern": "func [a-z0-9_]+\\("
+  "name": "go-function-leak",
+  "flags": "-Hni",
+  "pattern": "(?i)\\b(func\\s+[A-Za-z0-9_]+\\s*\\(.*?\\)|func\\s+\\([A-Za-z0-9_\\s*]+\\)\\s*[A-Za-z0-9_]+\\s*\\(.*?\\)|http\\.HandleFunc\\b|func\\s+Test[A-Za-z0-9_]+\\s*\\(t\\s*\\*testing\\.T\\))",
+  "blacklist": [
+    "example\\.go",
+    "sample\\.go",
+    "test\\.go",
+    "func\\s+.*\\.js",
+    "function\\s+[a-z0-9_]+\\(",
+    "docs\\.golang\\.org"
+  ],
+  "description": "Detects Go function declarations, method signatures, HTTP handlers, and test functions in HTTP responses, JavaScript, or logs. Includes exported and unexported functions, method receivers, and common Go patterns. Filters false positives like JavaScript functions or documentation.",
+  "severity": "high",
+  "authors": ["Grok3"],
+  "recommendations": [
+    "Avoid exposing Go source code in public HTTP responses or client-side files.",
+    "Implement custom error handlers to suppress debug or stack trace leaks.",
+    "Restrict access to administrative or debugging endpoints exposing Go code.",
+    "Audit JavaScript files and API responses for hardcoded Go code snippets.",
+    "Use static analysis tools (e.g., gosec) to detect sensitive code exposure."
+  ],
+  "reference": [
+    "https://owasp.org/Top10/A05_2021-Security_Misconfiguration/",
+    "https://cheatsheetseries.owasp.org/cheatsheets/Information_Disclosure_Cheat_Sheet.html",
+    "https://go.dev/doc/effective_go"
+  ],
+  "grep": true
 }
