@@ -26,7 +26,27 @@
         "project not found",
         "This UserVoice subdomain is currently available!",
         "Do you want to register",
-        "Help Center Closed"
+        "Help Center Closed",
+        "404 Not Found",
+        "Bucket Not Found",
+        "Page Not Found",
+        "Error 404",
+        "Site Temporarily Unavailable",
+        "This domain is not currently configured",
+        "Subdomain not found",
+        "No such service",
+        "Invalid domain",
+        "The page you requested cannot be found",
+        "No such file or directory",
+        "Account Suspended",
+        "Page does not exist",
+        "This site is under maintenance",
+        "Connection timed out",
+        "Access Denied",
+        "No records found",
+        "This domain is not configured properly",
+        "Domain not found",
+        "Server Error",
+        "Website is not available"
     ]
 }
-
