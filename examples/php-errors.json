@@ -1,17 +1,30 @@
 {
-    "flags": "-HnriE",
-    "patterns": [
-        "php warning",
-        "php error",
-        "fatal error",
-        "uncaught exception",
-        "include_path",
-        "undefined index",
-        "undefined variable",
-        "\\?php",
-        "<\\?[^x]",
-        "stack trace\\:",
-        "expects parameter [0-9]*",
-        "Debug Trace"
-    ]
+  "name": "php-error-leak",
+  "flags": "-Hni",
+  "pattern": "(?i)\\b(?:PHP\\s+(?:Warning|Error|Fatal\\s+Error|Parse\\s+Error|Notice|Deprecated|E_(?:ERROR|WARNING|NOTICE|DEPRECATED))|Uncaught\\s+Exception|include_path\\s*=|Undefined\\s+(?:Index|Variable|Offset)|\\?php\\b|<\\?\\s*(?!xml)|Stack\\s+Trace\\b|expects\\s+parameter\\s+\\d+|Debug\\s+Trace\\b|var_dump\\s*\\(|print_r\\s*\\(|error_log\\s*\\(|(?:in|at)\\s+[^\\n]+?on\\s+line\\s+\\d+)",
+  "blacklist": [
+    "example\\.com",
+    "sample\\.php",
+    "test\\.php",
+    "docs\\.php\\.net",
+    "example\\.php",
+    "tutorial\\.php",
+    "localhost"
+  ],
+  "description": "Detects PHP-related errors, warnings, debug traces, and code exposure in HTTP responses, PHP files, or logs. Includes common error messages (e.g., PHP Warning, Fatal Error), debug functions (e.g., var_dump), and code indicators (e.g., <?php). Filters false positives like documentation or example code.",
+  "severity": "high",
+  "authors": ["Grok3"],
+  "recommendations": [
+    "Disable display_errors in production (php.ini: display_errors=Off).",
+    "Use custom error handlers to suppress sensitive stack traces and debug info.",
+    "Avoid exposing PHP source code (e.g., <?php) in public responses.",
+    "Restrict access to debug endpoints or logs containing error details.",
+    "Audit server configurations to prevent misconfigured PHP error reporting."
+  ],
+  "reference": [
+    "https://owasp.org/Top10/A05_2021-Security_Misconfiguration/",
+    "https://cheatsheetseries.owasp.org/cheatsheets/Information_Disclosure_Cheat_Sheet.html",
+    "https://www.php.net/manual/en/errorfunc.configuration.php"
+  ],
+  "grep": true
 }
