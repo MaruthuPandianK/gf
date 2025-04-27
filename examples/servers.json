@@ -1,4 +1,13 @@
 {
-    "flags": "-hri",
-    "pattern": "server: "
+  "flags": "-hri",
+  "pattern": "(server:|X-Powered-By:|X-Server-Name:|X-AspNet-Version:|X-Framework:|X-Backend-Server:|X-Powered-By|nginx|Apache|lighttpd|IIS|Tomcat|node.js|Express|PHP|rails|cloudflare|Microsoft-IIS|nginx/|LiteSpeed|Cherokee|Jetty|Caddy|OpenResty|LiteSpeed|mod_fcgid|PHP/|WordPress|Joomla|Magento|Drupal|Zend|Python|ASP.NET|ColdFusion|React|Vue.js)",
+  "description": "Detects server-related headers, common server software, and web application frameworks that could reveal the technology stack behind a web server, helping in identifying potential attack surfaces.",
+  "severity": "critical",
+  "authors": ["maruthu"],
+  "reference": [
+    "https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Server",
+    "https://www.owasp.org/index.php/Testing_for_information_leakage_(OTG-INPVAL-003)",
+    "https://www.acs.com.hk/download-manual/TechNote_Security.pdf",
+    "https://www.owasp.org/index.php/Cross_Site_Scripting_(XSS)"
+  ]
 }
